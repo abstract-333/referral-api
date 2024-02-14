@@ -3,28 +3,7 @@ from typing import Any
 from starlette import status
 
 from exceptions.error_code import ErrorModel, ErrorCode
-from .base import HTTPException500, httpexceptiondict500
-
-sign_up_responses = {
-    status.HTTP_406_NOT_ACCEPTABLE: {
-        "model": ErrorModel,
-        "content": {
-            "application/json": {
-                "examples": {
-                    ErrorCode.EMAIL_ALREADY_EXISTS: {
-                        "summary": "Email is already taken",
-                        "value": {"detail": ErrorCode.EMAIL_ALREADY_EXISTS},
-                    },
-                }
-            }
-        },
-    },
-    status.HTTP_500_INTERNAL_SERVER_ERROR: {
-        "model": HTTPException500,
-        "description": "Internal Server Error",
-    },
-}
-
+from .base import http_exception_dict500
 
 sign_in_response: dict[int | str, dict[str, Any]] = {
     status.HTTP_401_UNAUTHORIZED: {
@@ -82,7 +61,7 @@ sign_in_response: dict[int | str, dict[str, Any]] = {
             }
         },
     },
-    status.HTTP_500_INTERNAL_SERVER_ERROR: httpexceptiondict500,
+    status.HTTP_500_INTERNAL_SERVER_ERROR: http_exception_dict500,
 }
 get_tokens_response: dict[int | str, dict[str, Any]] = {
     status.HTTP_401_UNAUTHORIZED: {
@@ -145,7 +124,7 @@ get_tokens_response: dict[int | str, dict[str, Any]] = {
             }
         },
     },
-    status.HTTP_500_INTERNAL_SERVER_ERROR: httpexceptiondict500,
+    status.HTTP_500_INTERNAL_SERVER_ERROR: http_exception_dict500,
 }
 sign_out_response: dict[int | str, dict[str, Any]] = {
     status.HTTP_401_UNAUTHORIZED: {
@@ -208,5 +187,5 @@ sign_out_response: dict[int | str, dict[str, Any]] = {
             }
         },
     },
-    status.HTTP_500_INTERNAL_SERVER_ERROR: httpexceptiondict500,
+    status.HTTP_500_INTERNAL_SERVER_ERROR: http_exception_dict500,
 }

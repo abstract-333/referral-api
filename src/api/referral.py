@@ -1,7 +1,7 @@
-from ast import Tuple
-import uuid
 from fastapi import APIRouter
 from starlette import status
+
+from api.docs import referral_responses
 from dependencies import UOWDep, CurrentActiveUserDep
 from schemas.user import BaseUser
 from services.user import UserService
@@ -15,6 +15,7 @@ referral_router = APIRouter(
 @referral_router.get(
     path="",
     status_code=status.HTTP_200_OK,
+    responses=referral_responses,
 )
 async def get_users_registered_by_referrer_id(
     current_user: CurrentActiveUserDep,

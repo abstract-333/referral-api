@@ -1,8 +1,8 @@
+import uuid
 from abc import ABC, abstractmethod
 from typing import Tuple
-import uuid
 
-from sqlalchemy import Result, Select, select
+from sqlalchemy import Select, select
 
 from models import UsersOrm
 from models.referral import ReferralsOrm
@@ -44,7 +44,7 @@ class UserRepository(SQLAlchemyRepository[UserInDB], UserRepositoryBase):
             .join(ReferralsOrm, UsersOrm.id == ReferralsOrm.referral_id)
             .filter(ReferralsOrm.referrer_id == referrer_id)
         )
-        result: Result = await self.session.execute(query)
+        result = await self.session.execute(query)
         result = tuple(row[0].to_read_model() for row in result.all())
 
         if not result:

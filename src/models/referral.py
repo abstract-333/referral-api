@@ -1,29 +1,15 @@
-import datetime
-from typing import TYPE_CHECKING
-
 from sqlalchemy import (
     ForeignKey,
-    String,
     UniqueConstraint,
 )
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
-
+from schemas import ReferralInDB
 from .base import (
     BaseModelORM,
     uuid_pk,
     uuid_type,
 )
-from schemas import ReferralInDB
-
-if TYPE_CHECKING:
-    from models.user import UsersOrm
-
-
-def _get_userslorm() -> type["UsersOrm"]:
-    from .user import UsersOrm
-
-    return UsersOrm
 
 
 class ReferralsOrm(BaseModelORM[ReferralInDB]):
@@ -36,18 +22,6 @@ class ReferralsOrm(BaseModelORM[ReferralInDB]):
         ForeignKey("users.id", ondelete="CASCADE", onupdate="CASCADE"),
         unique=False,
     )
-
-    # Relationships for ORM
-    # referral_user: Mapped["UsersOrm"] = relationship(
-    #     back_populates="referral",
-    #     # foreign_keys=["ReferralsOrm.referral_id"],
-    #     # primaryjoin="referral_id == UsersOrm.id",
-    # )
-    # referrer_user: Mapped["UsersOrm"] = relationship(
-    #     back_populates="referrer",
-    #     # foreign_keys=["ReferralsOrm.referrer_id"],
-    #     # primaryjoin="referrer_id == UsersOrm.id",
-    # )
 
     __table_args__ = (
         UniqueConstraint(

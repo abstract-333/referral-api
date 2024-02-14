@@ -1,15 +1,16 @@
-from pydantic import EmailStr
+from http import HTTPStatus
+
 import httpx
+from pydantic import EmailStr
+
 from exceptions.base import ExceptionBadRequest400
 from exceptions.error_code import ErrorCode
 from settings import settings_obj
 
-from http import HTTPStatus
-
 
 class EmailService:
     @classmethod
-    async def verify_email(cls, email: EmailStr) -> bool:
+    async def verify_email(cls, email: EmailStr) -> EmailStr:
         try:
             async with httpx.AsyncClient() as client:
                 response: httpx.Response = await client.get(

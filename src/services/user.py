@@ -1,6 +1,5 @@
-from typing import Any, Tuple
 import uuid
-from weakref import ref
+from typing import Any, Tuple
 
 from common import IUnitOfWork
 from exceptions import (
@@ -113,7 +112,6 @@ class UserService:
                     referrer_id=referrer_id, uow=uow
                 )
             )
-
             return registered_by_referrer_id
 
         except Exception as e:

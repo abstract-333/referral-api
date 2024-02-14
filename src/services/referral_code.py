@@ -1,18 +1,14 @@
 import time
-from typing import Tuple
-from fastapi_cache import FastAPICache
-from sqlalchemy import Select, join, select
 import uuid
 
-from pydantic import EmailStr, PositiveInt
+from pydantic import PositiveInt
+
 from common import IUnitOfWork
 from exceptions.base import (
     ExceptionBadRequest400,
     ExceptionNotFound404,
 )
 from exceptions.error_code import ErrorCode
-from models.referral_code import ReferralCodesOrm
-from models.user import UsersOrm
 from schemas.referral_code import ReferralCodeInDB
 
 
@@ -49,24 +45,24 @@ class ReferralCodeService:
             return referral_code
 
     @classmethod
-    async def _get_referral_code_by_email(
-        cls,
-        email: EmailStr,
-        uow: IUnitOfWork,
-    ) -> ReferralCodeInDB | None:
-        async with uow:
-            referral_code: ReferralCodeInDB | None = (
-                await uow.referral_code.get_referral_code_by_email(email=email)
-            )
-            return referral_code
-
-    @classmethod
     async def _delete_referral_code(cls, user_id: uuid.UUID, uow: IUnitOfWork) -> None:
         async with uow:
             await uow.referral_code.delete_one(user_id=user_id)
             await uow.commit()
 
-    async def get_referrel_code(
+    async def get_referral_code_by_user_id(
+        self, user_id: uuid.UUID, uow: IUnitOfWork
+    ) -> ReferralCodeInDB | None:
+        try:
+            referral_code: ReferralCodeInDB | None = (
+                await self._get_referral_code_by_user_id(user_id=user_id, uow=uow)
+            )
+            return referral_code
+
+        except Exception as e:
+            raise e
+
+    async def get_referral_code(
         self,
         uow: IUnitOfWork,
         user_id: uuid.UUID,
@@ -101,7 +97,7 @@ class ReferralCodeService:
         except Exception as e:
             raise e
 
-    async def detele_referral_code_by_user_id(
+    async def delete_referral_code_by_user_id(
         self, user_id: uuid.UUID, uow: IUnitOfWork
     ) -> None:
         try:
@@ -117,25 +113,6 @@ class ReferralCodeService:
             await self._delete_referral_code(user_id=user_id, uow=uow)
 
             return None
-
-        except Exception as e:
-            raise e
-
-    async def get_referral_code_by_email(
-        self, email: EmailStr, uow: IUnitOfWork
-    ) -> ReferralCodeInDB | None:
-        try:
-
-            referral_code: ReferralCodeInDB | None = (
-                await self._get_referral_code_by_email(email=email, uow=uow)
-            )
-
-            if referral_code and self._is_expired_referral_code(
-                valid_until=referral_code.valid_until
-            ):
-                return None
-
-            return referral_code
 
         except Exception as e:
             raise e

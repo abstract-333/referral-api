@@ -215,12 +215,12 @@ class AuthService:
 
     async def get_user_by_email(self, email: EmailStr, uow: IUnitOfWork) -> UserRead:
         try:
-            returend_user: UserRead | None = await self._get_user(email=email, uow=uow)
+            returned_user: UserRead | None = await self._get_user(email=email, uow=uow)
 
-            if not returend_user:
+            if not returned_user:
                 raise ExceptionNotFound404(detail=ErrorCode.USER_NOT_EXISTS)
 
-            return returend_user
+            return returned_user
 
         except Exception as e:
             raise e

@@ -1,5 +1,4 @@
 import datetime
-from typing import TYPE_CHECKING
 
 from sqlalchemy import (
     ForeignKey,
@@ -8,14 +7,13 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.user import UsersOrm
-
+from schemas import TokenBlacklistInDB
 from .base import (
     BaseModelORM,
     uuid_pk,
     uuid_type,
     timeSeconds,
 )
-from schemas import TokenBlacklistInDB
 
 
 class TokensBlacklistOrm(BaseModelORM[TokenBlacklistInDB]):

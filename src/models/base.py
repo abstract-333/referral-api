@@ -1,6 +1,6 @@
 import time
 from abc import abstractmethod
-from typing import Annotated, Final, TypeVar, Generic
+from typing import Annotated, TypeVar, Generic
 
 from pydantic import BaseModel
 from sqlalchemy import (

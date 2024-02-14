@@ -7,7 +7,6 @@ from starlette import status
 
 from api.docs import health_response
 from dependencies import SessionDep
-from services.email import EmailService
 
 health_router = APIRouter(
     prefix="/health",
@@ -29,8 +28,3 @@ async def health(session: SessionDep) -> None:
     except (asyncio.TimeoutError, socket.gaierror):
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE)
     return None
-
-
-@health_router.get(path="/{email}")
-async def get(email: str):
-    return await EmailService.verify_email(email=email)

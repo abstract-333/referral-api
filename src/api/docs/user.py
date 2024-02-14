@@ -3,7 +3,82 @@ from typing import Any
 from starlette import status
 
 from exceptions.error_code import ErrorModel, ErrorCode
-from .base import httpexceptiondict500
+from .base import HTTPException500, http_exception_dict500
+
+register_responses = {
+    status.HTTP_406_NOT_ACCEPTABLE: {
+        "model": ErrorModel,
+        "content": {
+            "application/json": {
+                "examples": {
+                    ErrorCode.EMAIL_ALREADY_EXISTS: {
+                        "summary": "Email is already taken",
+                        "value": {"detail": ErrorCode.EMAIL_ALREADY_EXISTS},
+                    },
+                }
+            }
+        },
+    },
+    status.HTTP_500_INTERNAL_SERVER_ERROR: {
+        "model": HTTPException500,
+        "description": "Internal Server Error",
+    },
+}
+
+register_with_referral_code_responses = {
+    status.HTTP_400_BAD_REQUEST: {
+        "model": ErrorModel,
+        "content": {
+            "application/json": {
+                "examples": {
+                    ErrorCode.REFERRAL_CODE_INVALID: {
+                        "summary": "Referral code is expired",
+                        "value": {"detail": ErrorCode.REFERRAL_CODE_INVALID},
+                    },
+                    ErrorCode.EMAIL_INVALID: {
+                        "summary": "Entered email is invalid or looks unsafe",
+                        "value": {"detail": ErrorCode.EMAIL_INVALID},
+                    },
+                }
+            }
+        },
+    },
+    status.HTTP_404_NOT_FOUND: {
+        "model": ErrorModel,
+        "content": {
+            "application/json": {
+                "examples": {
+                    ErrorCode.REFERRAL_CODE_NOT_FOUND: {
+                        "summary": "Referral code not found",
+                        "value": {"detail": ErrorCode.REFERRAL_CODE_NOT_FOUND},
+                    },
+                    ErrorCode.USER_NOT_EXISTS: {
+                        "summary": "User is not registered, please try later",
+                        "value": {"detail": ErrorCode.USER_NOT_EXISTS},
+                    },
+                }
+            }
+        },
+    },
+    status.HTTP_406_NOT_ACCEPTABLE: {
+        "model": ErrorModel,
+        "content": {
+            "application/json": {
+                "examples": {
+                    ErrorCode.EMAIL_ALREADY_EXISTS: {
+                        "summary": "Email is already taken",
+                        "value": {"detail": ErrorCode.EMAIL_ALREADY_EXISTS},
+                    },
+                }
+            }
+        },
+    },
+    status.HTTP_500_INTERNAL_SERVER_ERROR: {
+        "model": HTTPException500,
+        "description": "Internal Server Error",
+    },
+}
+
 
 update_user_response: dict[int | str, dict[str, Any]] = {
     status.HTTP_401_UNAUTHORIZED: {
@@ -66,7 +141,7 @@ update_user_response: dict[int | str, dict[str, Any]] = {
             }
         },
     },
-    status.HTTP_500_INTERNAL_SERVER_ERROR: httpexceptiondict500,
+    status.HTTP_500_INTERNAL_SERVER_ERROR: http_exception_dict500,
 }
 get_user_response: dict[int | str, dict[str, Any]] = {
     status.HTTP_401_UNAUTHORIZED: {
@@ -99,15 +174,11 @@ get_user_response: dict[int | str, dict[str, Any]] = {
                         "summary": "User is not active",
                         "value": {"detail": ErrorCode.USER_INACTIVE},
                     },
-                    ErrorCode.USER_NOT_VERIFIED: {
-                        "summary": "User is not verified",
-                        "value": {"detail": ErrorCode.USER_NOT_VERIFIED},
-                    },
                 }
             }
         },
     },
-    status.HTTP_500_INTERNAL_SERVER_ERROR: httpexceptiondict500,
+    status.HTTP_500_INTERNAL_SERVER_ERROR: http_exception_dict500,
 }
 delete_user_response: dict[int | str, dict[str, Any]] = {
     status.HTTP_401_UNAUTHORIZED: {
@@ -157,5 +228,5 @@ delete_user_response: dict[int | str, dict[str, Any]] = {
             }
         },
     },
-    status.HTTP_500_INTERNAL_SERVER_ERROR: httpexceptiondict500,
+    status.HTTP_500_INTERNAL_SERVER_ERROR: http_exception_dict500,
 }

@@ -14,7 +14,7 @@ class HTTPException500(BaseModelException):
         }
 
 
-httpexceptiondict500: dict[str, str] = {
+http_exception_dict500: dict[str, str] = {
     "model": HTTPException500,
     "description": "Internal Server Error",
 }

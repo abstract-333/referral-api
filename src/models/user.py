@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from sqlalchemy import (
     String,
 )
@@ -8,7 +9,9 @@ from sqlalchemy.orm import (
     relationship,
 )
 
-
+from schemas import (
+    UserInDB,
+)
 from .base import (
     BaseModelORM,
     uuid_pk,
@@ -17,13 +20,9 @@ from .base import (
     boolTrue,
     boolFalse,
 )
-from schemas import (
-    UserInDB,
-)
 
 if TYPE_CHECKING:
     from .token_blacklist import TokensBlacklistOrm
-    from .referral import ReferralsOrm
     from .referral_code import ReferralCodesOrm
 
 
@@ -48,14 +47,6 @@ class UsersOrm(BaseModelORM[UserInDB]):
         back_populates="user",
     )
     referral_code: Mapped["ReferralCodesOrm"] = relationship(back_populates="user")
-    # referral: Mapped["ReferralsOrm"] = relationship(
-    #     back_populates="referral_user",
-    #     primaryjoin="UsersOrm.id==ReferralsOrm.referral_id or UsersOrm.id==ReferralsOrm.referrer_id",
-    # )
-    # referrer: Mapped[list["ReferralsOrm"]] = relationship(
-    #     back_populates="referrer_user",
-    #     primaryjoin="UsersOrm.id==ReferralsOrm.referral_id or UsersOrm.id==ReferralsOrm.referrer_id",
-    # )
 
     repr_cols_num = 5
     repr_cols = ("is_active", "is_superuser")

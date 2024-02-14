@@ -5,7 +5,7 @@ This REST API is made for [test](https://docs.google.com/document/d/1YaiDiza5U3i
 
 ## Main Concepts:
 
-#### Reposository Pattern.
+#### Repository Pattern.
 
 #### Unit of Work Pattern.
 
@@ -22,7 +22,7 @@ This REST API is made for [test](https://docs.google.com/document/d/1YaiDiza5U3i
 ### Install from git:
 
 ```shell
-$ git clone https://gitflic.ru/project/abstract-333/quiz-api
+$ git clone https://gitflic.ru/project/abstract-333/referral-api.git
 ```
 
 ### Install dependencies:
@@ -34,7 +34,7 @@ $ pip install -r requirements.txt
 ### Make migration for database:
 
 <strong>
-First Create dabatabas under "name".
+First Create database under "name".
 <br>
 Add this name and other properties to .env file, so that project could working properly.
 </strong>

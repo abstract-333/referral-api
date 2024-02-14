@@ -1,24 +1,22 @@
 import datetime
 import time
-from typing import TYPE_CHECKING
-from nanoid import generate
 
+from nanoid import generate
 from sqlalchemy import (
     ForeignKey,
     String,
-    UniqueConstraint,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from settings import settings_obj
-from models.user import UsersOrm
 
+from models.user import UsersOrm
+from schemas import ReferralCodeInDB
+from settings import settings_obj
 from .base import (
     BaseModelORM,
     uuid_pk,
     uuid_type,
     timeSeconds,
 )
-from schemas import ReferralCodeInDB
 
 
 class ReferralCodesOrm(BaseModelORM[ReferralCodeInDB]):
