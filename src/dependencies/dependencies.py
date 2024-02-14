@@ -5,9 +5,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from common import IUnitOfWork, UnitOfWork
-from models import get_async_session
 from schemas import UserRead
 from services import AuthService
+from storage.db import get_async_session
 
 get_current_active_user = AuthService(is_active=True).get_current_user
 get_current_verified_user = AuthService(

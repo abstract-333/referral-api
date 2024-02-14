@@ -1,51 +1,39 @@
 from abc import ABC, abstractmethod
 
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from models import async_session_maker
-from respository import (
+from storage.db import async_session_maker
+from respositories import (
     UserRepository,
-    StudentRepository,
-    FacultyRepository,
-    LecturerRepository,
-    SpecialityRepository,
-    FacultyRepositoryBase,
     UserRepositoryBase,
-    SpecialityRepositoryBase,
-    StudentRepositoryBase,
-    LecturerRepositoryBase,
     TokenBlacklistRepositoryBase,
     TokenBlacklistRepository,
+    ReferralCodeRepository,
+    ReferralCodeRepositoryBase,
+    ReferralRepositoryBase,
+    ReferralRepository,
 )
 
 
 class IUnitOfWork(ABC):
     user: UserRepositoryBase
-    student: StudentRepositoryBase
-    faculty: FacultyRepositoryBase
-    lecturer: LecturerRepositoryBase
-    speciality: SpecialityRepositoryBase
+    referral_code: ReferralCodeRepositoryBase
     token_blacklist: TokenBlacklistRepositoryBase
+    referral: ReferralRepositoryBase
 
     @abstractmethod
-    def __init__(self):
-        ...
+    def __init__(self): ...
 
     @abstractmethod
-    async def __aenter__(self):
-        ...
+    async def __aenter__(self): ...
 
     @abstractmethod
-    async def __aexit__(self, *args):
-        ...
+    async def __aexit__(self, *args): ...
 
     @abstractmethod
-    async def commit(self):
-        ...
+    async def commit(self): ...
 
     @abstractmethod
-    async def rollback(self):
-        ...
+    async def rollback(self): ...
 
 
 class UnitOfWork(IUnitOfWork):
@@ -55,12 +43,13 @@ class UnitOfWork(IUnitOfWork):
     async def __aenter__(self):
         self.session: AsyncSession = self.session_factory()
 
-        self.user = UserRepository(self.session)
-        self.student = StudentRepository(self.session)
-        self.faculty = FacultyRepository(self.session)
-        self.lecturer = LecturerRepository(self.session)
-        self.speciality = SpecialityRepository(self.session)
-        self.token_blacklist = TokenBlacklistRepository(self.session)
+        self.user = UserRepository(session=self.session)
+
+        self.token_blacklist = TokenBlacklistRepository(session=self.session)
+
+        self.referral_code = ReferralCodeRepository(session=self.session)
+
+        self.referral = ReferralRepository(session=self.session)
 
     async def __aexit__(self, *args):
         await self.rollback()

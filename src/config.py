@@ -2,22 +2,25 @@ import os
 
 from dotenv import load_dotenv
 
-load_dotenv()
 
-DB_HOST = os.environ.get("DB_HOST")
-DB_USER = os.environ.get("DB_USER")
-DB_PASSWORD = os.environ.get("DB_PASSWORD")
-DB_PORT = os.environ.get("DB_PORT")
-DB_NAME = os.environ.get("DB_NAME")
+# If .env.local exists it will load it.
+if os.path.exists(".env.local"):
+    load_dotenv(".env.local")
+else:
+    # Otherwise load .env.prod
+    load_dotenv(".env.prod")
 
-AUTH_JWT_KEY = os.environ.get("JWT_SECRET_KEY")
-SENTRY_URL = os.environ.get("SENTRY_URL")
+DB_HOST: str | None = os.environ.get("DB_HOST")
+DB_USER: str | None = os.environ.get("DB_USER")
+DB_PASSWORD: str | None = os.environ.get("DB_PASSWORD")
+DB_PORT: str | None = os.environ.get("DB_PORT")
+DB_NAME: str | None = os.environ.get("DB_NAME")
 
-SMTP_USER = os.environ.get("SMTP_USER")
-SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
-SMTP_HOST = os.environ.get("SMTP_HOST")
+AUTH_JWT_KEY: str | None = os.environ.get("JWT_SECRET_KEY")
 
-TELEGRAM_BOT_API = os.environ.get("TELEGRAM_API_KEY")
-TELEGRAM_CHANNEL_ID = os.environ.get("TELEGRAM_CHANNEL_ID")
-TELEGRAM_API_ID = os.environ.get("TELEGRAM_API_ID")
-TELEGRAM_HASH = os.environ.get("TELEGRAM_HASH")
+NANO_ID_LENGTH: str | None = os.environ.get("NANO_ID_LENGTH")
+
+REDIS_HOST: str | None = os.environ.get("REDIS_HOST")
+REDIS_PORT: str | None = os.environ.get("REDIS_PORT")
+
+EMAIL_VERIFIER_API_KEY: str | None = os.environ.get("EMAIL_VERIFIER_API_KEY")

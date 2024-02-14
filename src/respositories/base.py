@@ -1,8 +1,8 @@
 from abc import abstractmethod, ABC
 from types import NoneType
-from typing import Any, TypeVar, Generic
-from pydantic import BaseModel
+from typing import TypeVar, Generic
 
+from pydantic import BaseModel
 from sqlalchemy import insert, select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -13,26 +13,21 @@ T = TypeVar("T", bound=BaseModel)
 
 class AbstractSQLRepository(Generic[T], ABC):
     @abstractmethod
-    async def add_one(self, data: dict) -> None:
-        ...
+    async def add_one(self, data: dict) -> None: ...
 
     @abstractmethod
-    async def edit_one(self, data: dict, **kwargs) -> None:
-        ...
+    async def edit_one(self, data: dict, **kwargs) -> None: ...
 
     @abstractmethod
     async def find_by(
         self, offset: int = None, limit: int = None, **kwargs
-    ) -> tuple[T] | None:
-        ...
+    ) -> tuple[T] | None: ...
 
     @abstractmethod
-    async def find_one(self, **kwargs) -> T | None:
-        ...
+    async def find_one(self, **kwargs) -> T | None: ...
 
     @abstractmethod
-    async def delete_one(self, **kwargs) -> None:
-        ...
+    async def delete_one(self, **kwargs) -> None: ...
 
 
 class SQLAlchemyRepository(AbstractSQLRepository[T], ABC):

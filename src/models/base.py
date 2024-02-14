@@ -14,8 +14,6 @@ from sqlalchemy.orm import (
 )
 
 Schema = TypeVar("Schema", bound=BaseModel)
-SELECTIN: Final[str] = "selectin"
-JOINED: Final[str] = "joined"
 
 
 class BaseModelORM(DeclarativeBase, Generic[Schema]):
