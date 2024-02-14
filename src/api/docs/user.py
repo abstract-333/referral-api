@@ -6,6 +6,19 @@ from exceptions.error_code import ErrorModel, ErrorCode
 from .base import HTTPException500, http_exception_dict500
 
 register_responses = {
+    status.HTTP_400_BAD_REQUEST: {
+        "model": ErrorModel,
+        "content": {
+            "application/json": {
+                "examples": {
+                    ErrorCode.EMAIL_INVALID: {
+                        "summary": "Entered email is invalid or looks unsafe",
+                        "value": {"detail": ErrorCode.EMAIL_INVALID},
+                    },
+                }
+            }
+        },
+    },
     status.HTTP_406_NOT_ACCEPTABLE: {
         "model": ErrorModel,
         "content": {
@@ -81,6 +94,19 @@ register_with_referral_code_responses = {
 
 
 update_user_response: dict[int | str, dict[str, Any]] = {
+    status.HTTP_400_BAD_REQUEST: {
+        "model": ErrorModel,
+        "content": {
+            "application/json": {
+                "examples": {
+                    ErrorCode.EMAIL_INVALID: {
+                        "summary": "Entered email is invalid or looks unsafe",
+                        "value": {"detail": ErrorCode.EMAIL_INVALID},
+                    },
+                }
+            }
+        },
+    },
     status.HTTP_401_UNAUTHORIZED: {
         "model": ErrorModel,
         "content": {
