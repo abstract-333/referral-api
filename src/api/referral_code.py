@@ -28,7 +28,7 @@ referral_code_router = APIRouter(
 )
 @cache(
     expire=settings_obj.REFERRAL_CODE_EXPIRATION
-    // 4,  # Data is cached for set duration in settings
+    // 5,  # Data is cached for set duration in settings
     namespace="referral-code",
 )
 async def get_referral_code(
