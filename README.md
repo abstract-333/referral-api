@@ -15,7 +15,12 @@ This REST API is made for [test](https://docs.google.com/document/d/1YaiDiza5U3i
 ## How to run
 
 ### Install from git:
-
+#### Using GitHub:
+```shell
+$ git clone https://github.com/abstract-333/referral-api.git
+```
+or 
+#### Using GitFlic:
 ```shell
 $ git clone https://gitflic.ru/project/abstract-333/referral-api.git
 ```
