@@ -53,6 +53,7 @@ class Settings(BaseSettings):
         """If .env.local exists it will load it.
         Otherwise load .env.prod"""
 
+        # To make alembic finds path correctly
         env_file: str = (
             f"{additional_path}.env.local"
             if os.path.exists(path=f"{additional_path}.env.local")

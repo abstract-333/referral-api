@@ -79,10 +79,10 @@ class ReferralCodeService:
             ):
                 return old_referral_code
 
+            await self.delete_referral_code_by_user_id(user_id=user_id, uow=uow)
             await self._add_referral_code(
                 create_referral_code={"user_id": user_id}, uow=uow
             )
-
             created_referral_code: ReferralCodeInDB | None = (
                 await self._get_referral_code_by_user_id(
                     user_id=user_id,

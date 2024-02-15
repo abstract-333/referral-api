@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-from fastapi_cache.decorator import cache
 from pydantic import EmailStr
 from starlette import status
 
@@ -13,7 +12,6 @@ from schemas import UserRead
 from schemas.referral_code import ReferralCodeRead
 from services import AuthService
 from services.referral_code import ReferralCodeService
-from settings import settings_obj
 
 referral_code_router = APIRouter(
     prefix="/referral-code",
@@ -26,11 +24,11 @@ referral_code_router = APIRouter(
     status_code=status.HTTP_200_OK,
     responses=get_referral_code_responses,
 )
-@cache(
-    expire=settings_obj.REFERRAL_CODE_EXPIRATION
-    // 4,  # Data is cached for set duration in settings
-    namespace="referral-code",
-)
+# @cache(
+#     expire=settings_obj.REFERRAL_CODE_EXPIRATION
+#     // 4,  # Data is cached for set duration in settings
+#     namespace="referral-code",
+# )
 async def get_referral_code(
     current_user: CurrentActiveUserDep,
     uow: UOWDep,

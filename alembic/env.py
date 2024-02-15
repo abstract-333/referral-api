@@ -1,6 +1,7 @@
 import os
 import sys
 from logging.config import fileConfig
+
 from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
@@ -10,8 +11,8 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 sys.path.append(os.path.join(sys.path[0], "src"))
-from src import settings_obj
-from src import BaseModelORM
+from settings import settings_obj
+from models import BaseModelORM
 
 
 config.set_main_option("sqlalchemy.url", settings_obj.database_url)
