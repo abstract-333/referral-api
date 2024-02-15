@@ -1,3 +1,4 @@
+import re
 import uuid
 from typing import Annotated, Optional
 
@@ -85,22 +86,22 @@ class UserCreate(ExtenedUser):
         if self.password.lower() in self.first_name.lower() + self.last_name.lower():
             raise ValueError("Password should not contain full_name")
 
-        # uppercase_pattern = re.compile(r"[A-Z]")
-        # lowercase_pattern = re.compile(r"[a-z]")
-        # digit_pattern = re.compile(r"\d")
-        # special_pattern = re.compile(r'[!@#$%^&*()_+{}|\[\]:";<>,.?/~`]')
+        uppercase_pattern = re.compile(r"[A-Z]")
+        lowercase_pattern = re.compile(r"[a-z]")
+        digit_pattern = re.compile(r"\d")
+        special_pattern = re.compile(r'[!@#$%^&*()_+{}|\[\]:";<>,.?/~`]')
 
-        # if not uppercase_pattern.search(self.password):
-        #     raise ValueError("Password should contain at least one uppercase character")
+        if not uppercase_pattern.search(self.password):
+            raise ValueError("Password should contain at least one uppercase character")
 
-        # if not lowercase_pattern.search(self.password):
-        #     raise ValueError("Password should contain at least one lowercase character")
+        if not lowercase_pattern.search(self.password):
+            raise ValueError("Password should contain at least one lowercase character")
 
-        # if not digit_pattern.search(self.password):
-        #     raise ValueError("Password should contain at least one digit")
+        if not digit_pattern.search(self.password):
+            raise ValueError("Password should contain at least one digit")
 
-        # if not special_pattern.search(self.password):
-        #     raise ValueError("Password should contain at least one special character")
+        if not special_pattern.search(self.password):
+            raise ValueError("Password should contain at least one special character")
 
         return self
 
