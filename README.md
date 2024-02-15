@@ -56,7 +56,7 @@ $ uvicorn app:app --reload
   else stole user's access token it will be valid for short period. When user needs new access token he can use his
   refresh
   token in order to get new access and refresh tokens, and old refresh token will be sent to blacklist. Sign-out do the
-  same almost but here we don't return any tokens to user obviously :).
+  same almost but here we don't return any tokens to user obviously :)
 * [Dynamic Salt](https://auth0.com/blog/adding-salt-to-hashing-a-better-way-to-store-passwords/) is a great choice when
   you need to secure your password hash from rainbow table.
 * Implementing UoW and repository patterns.
