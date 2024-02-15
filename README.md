@@ -72,7 +72,15 @@ $ uvicorn app:app --reload
   and [ORJSON](https://github.com/ijl/orjson), which increase the
   performance of this api.
   ![ORJSON](https://github.com/ijl/orjson/raw/master/doc/serialization.png)
+* [Health Check pattern](https://microservices.io/patterns/observability/health-check-api.html). The API endpoint
+  handler performs various checks, such as
+  the status of the connections to the infrastructure services used by the service instance,
+  the status of the host and application specific logic.
 
 ## ERD:
 
 ![referral_db](./images/referral_db.jpg)
+
+## Routers:
+
+![routers](./images/routers.png)
