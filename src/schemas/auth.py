@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PositiveInt
 
 from settings import settings_obj
 
@@ -13,3 +13,4 @@ class AccessRefreshTokens(BaseModel):
     token_type: str = Field(
         default="bearer",
     )
+    access_expires_in: PositiveInt = settings_obj.JWT_EXPIRATION_ACCESS_TOKEN
