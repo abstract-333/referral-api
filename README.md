@@ -72,6 +72,10 @@ $ uvicorn app:app --reload
 * Implementing UoW and repository patterns.
 * [UUID v7](https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-04.html#name-uuid-version-7) is must
   have.
+* The
+  system treats
+  these emails similarly (_user@example.com_, _u.s.e.r@example.com_), see why
+  it's [important](https://support.google.com/mail/answer/7436150?hl=en#:~:text=Adding%20dots%20doesn't%20change,or%20forgot%20the%20correct%20address.).
 * Adding Docs for all routers.
 * Using pydantic in order to make validation simple and safe,
   also [Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/) sounds good to manage
@@ -86,10 +90,6 @@ $ uvicorn app:app --reload
   handler performs various checks, such as
   the status of the connections to the infrastructure services used by the service instance,
   the status of the host and application specific logic.
-* The
-  system treats
-  these emails similarly (_user@example.com_, _u.s.e.r@example.com_), see why
-  it's [important](https://support.google.com/mail/answer/7436150?hl=en#:~:text=Adding%20dots%20doesn't%20change,or%20forgot%20the%20correct%20address.).
 
 ## ERD:
 
