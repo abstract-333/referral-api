@@ -1,13 +1,29 @@
-from typing import Final
+from fastapi import Request, Response
 
-from redis import asyncio as aioredis, Redis
 from settings import settings_obj
+import redis.asyncio as redis
+from redis.asyncio.connection import ConnectionPool
 
 
-async def get_redis_config() -> Redis:
-    redis: Final[Redis] = await aioredis.from_url(
-        url=f"redis://{settings_obj.REDIS_HOST}:{settings_obj.REDIS_PORT}",
-        encoding="utf8",
-        decode_responses=True,
+def get_redis_config():
+    pool: ConnectionPool = ConnectionPool.from_url(
+        url=f"redis://{settings_obj.REDIS_HOST}:{settings_obj.REDIS_PORT}"
     )
-    return redis
+    r = redis.Redis(connection_pool=pool)
+    return r
+
+
+def request_key_builder(
+    func,
+    namespace: str = "",
+    request: Request = None,
+    response: Response = None,
+    *args,
+    **kwargs,
+):
+    return ":".join(
+        [
+            namespace,
+            repr(sorted(request.query_params.items()["current_user"].id)),
+        ]
+    )

@@ -15,6 +15,9 @@ class ReferralCodeRepositoryBase(AbstractSQLRepository[ReferralCodeInDB], ABC):
     @abstractmethod
     async def delete_referral_code(self, **kwargs) -> None: ...
 
+    @abstractmethod
+    async def edit_referral_code(self, referral_data: dict) -> None: ...
+
 
 class ReferralCodeRepository(
     SQLAlchemyRepository[ReferralCodeInDB], ReferralCodeRepositoryBase
@@ -27,6 +30,9 @@ class ReferralCodeRepository(
     async def get_referral_code(self, **kwargs) -> ReferralCodeInDB | None:
         tokens: ReferralCodeInDB | None = await self.find_one(**kwargs)
         return tokens
+
+    async def edit_referral_code(self, referral_data: dict) -> None:
+        await self.edit_one(data=referral_data)
 
     async def delete_referral_code(
         self,

@@ -16,7 +16,7 @@ from views_routers import routers
 @asynccontextmanager
 async def app_lifespan(app: FastAPI):
     # On startup
-    redis: Final[Redis] = await get_redis_config()
+    redis: Final[Redis] = get_redis_config()
     FastAPICache.init(backend=RedisBackend(redis=redis), prefix="fastapi-cache")
 
     yield

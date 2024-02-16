@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request, Response
+from fastapi_cache import FastAPICache
 from fastapi_cache.decorator import cache
 from pydantic import EmailStr
 from starlette import status
@@ -29,7 +30,7 @@ referral_code_router = APIRouter(
 @cache(
     expire=settings_obj.REFERRAL_CODE_EXPIRATION
     // 5,  # Data is cached for set duration in settings
-    namespace="referral-code",
+    namespace="get_referral_code",
 )
 async def get_referral_code(
     current_user: CurrentActiveUserDep,
@@ -70,9 +71,10 @@ async def get_referral_code_by_email(
 async def delete_referral_code(
     current_user: CurrentActiveUserDep,
     uow: UOWDep,
+    request: Request,
+    response: Response,
 ) -> None:
     referral_code_service = ReferralCodeService()
-
     await referral_code_service.delete_referral_code_by_user_id(
         user_id=current_user.id,
         uow=uow,

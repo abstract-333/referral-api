@@ -19,6 +19,14 @@ from .base import (
 )
 
 
+def _get_expire_time() -> int:
+    return time.time() + settings_obj.REFERRAL_CODE_EXPIRATION
+
+
+def _get_nano_id() -> str:
+    return generate(size=settings_obj.NANO_ID_LENGTH)
+
+
 class ReferralCodesOrm(BaseModelORM[ReferralCodeInDB]):
     __tablename__ = "referral_codes"
     id: Mapped[uuid_pk]
@@ -30,13 +38,13 @@ class ReferralCodesOrm(BaseModelORM[ReferralCodeInDB]):
         String(length=10),
         unique=True,
         nullable=False,
-        default=generate(size=settings_obj.NANO_ID_LENGTH),
+        default=_get_nano_id,
     )
     added_at: Mapped[timeSeconds]
 
     valid_until: Mapped[int] = mapped_column(
         nullable=False,
-        default=time.time() + settings_obj.REFERRAL_CODE_EXPIRATION,
+        default=_get_expire_time,
     )
 
     # Relationships for ORM

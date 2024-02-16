@@ -1,5 +1,6 @@
 import time
 import uuid
+from fastapi_cache import FastAPICache
 
 from pydantic import PositiveInt
 
@@ -45,6 +46,17 @@ class ReferralCodeService:
             return referral_code
 
     @classmethod
+    async def _edit_referral_code(
+        cls,
+        referral_code_data: dict,
+        user_id: uuid.UUID,
+        uow: IUnitOfWork,
+    ) -> None:
+        async with uow:
+            await uow.referral_code.edit_one(referral_code_data, user_id=user_id)
+            await uow.commit()
+
+    @classmethod
     async def _delete_referral_code(cls, user_id: uuid.UUID, uow: IUnitOfWork) -> None:
         async with uow:
             await uow.referral_code.delete_one(user_id=user_id)
@@ -74,12 +86,17 @@ class ReferralCodeService:
                     uow=uow,
                 )
             )
+
+            # If referral_code exists in db and it is valid, return it.
             if old_referral_code and not self._is_expired_referral_code(
                 valid_until=old_referral_code.valid_until
             ):
                 return old_referral_code
 
-            await self.delete_referral_code_by_user_id(user_id=user_id, uow=uow)
+            # Delete old referral_code
+            await self._delete_referral_code(user_id=user_id, uow=uow)
+
+            # Add new code to db
             await self._add_referral_code(
                 create_referral_code={"user_id": user_id}, uow=uow
             )
@@ -101,6 +118,7 @@ class ReferralCodeService:
         self, user_id: uuid.UUID, uow: IUnitOfWork
     ) -> None:
         try:
+            await FastAPICache.clear(namespace="get_referral_code")
             old_referral_code: ReferralCodeInDB | None = (
                 await self._get_referral_code_by_user_id(
                     user_id=user_id,
@@ -111,6 +129,8 @@ class ReferralCodeService:
                 raise ExceptionNotFound404(detail=ErrorCode.REFERRAL_CODE_NOT_FOUND)
 
             await self._delete_referral_code(user_id=user_id, uow=uow)
+
+            # Erase cached referral_code
 
             return None
 
