@@ -118,7 +118,7 @@ class ReferralCodeService:
         self, user_id: uuid.UUID, uow: IUnitOfWork
     ) -> None:
         try:
-            await FastAPICache.clear(namespace="get_referral_code")
+
             old_referral_code: ReferralCodeInDB | None = (
                 await self._get_referral_code_by_user_id(
                     user_id=user_id,
@@ -131,6 +131,7 @@ class ReferralCodeService:
             await self._delete_referral_code(user_id=user_id, uow=uow)
 
             # Erase cached referral_code
+            await FastAPICache.clear(namespace="get_referral_code")
 
             return None
 
