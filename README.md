@@ -27,7 +27,7 @@ or
 #### Using GitFlic:
 
 ```shell
-$ git clone https://github.com/abstract-333/referral-api.git
+$ git clone https://gitflic.ru/project/abstract-333/referral-api.git
 ```
 
 ### Install dependencies:
