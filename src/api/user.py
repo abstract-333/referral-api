@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Path, Query
 from starlette import status
 
 from api.docs import (
@@ -34,7 +34,7 @@ user_router = APIRouter(
     status_code=status.HTTP_201_CREATED,
     responses=register_responses,
 )
-async def register(
+async def register_user(
     user_data: UserCreate,
     uow: UOWDep,
 ) -> dict[str, str]:
@@ -47,16 +47,16 @@ async def register(
 
 
 @user_router.post(
-    path="/register/by-referral-code",
+    path="/register/{referral_code}",
     status_code=status.HTTP_201_CREATED,
     responses=register_with_referral_code_responses,
 )
-async def register_by_referral_code(
+async def register_user_by_referral_code(
     user_data: UserCreate,
     uow: UOWDep,
     referral_code: Annotated[
-        str | None,
-        Query(
+        str,
+        Path(
             min_length=settings_obj.NANO_ID_LENGTH,
             max_length=settings_obj.NANO_ID_LENGTH,
         ),

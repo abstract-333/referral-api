@@ -71,8 +71,6 @@ async def get_referral_code_by_email(
 async def delete_referral_code(
     current_user: CurrentActiveUserDep,
     uow: UOWDep,
-    request: Request,
-    response: Response,
 ) -> None:
     referral_code_service = ReferralCodeService()
     await referral_code_service.delete_referral_code_by_user_id(

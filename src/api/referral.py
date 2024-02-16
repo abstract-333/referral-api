@@ -17,7 +17,7 @@ referral_router = APIRouter(
     status_code=status.HTTP_200_OK,
     responses=referral_responses,
 )
-async def get_users_registered_by_referrer_id(
+async def get_users_registered_by_my_referral_code(
     current_user: CurrentActiveUserDep,
     uow: UOWDep,
 ) -> list[BaseUser] | None:
