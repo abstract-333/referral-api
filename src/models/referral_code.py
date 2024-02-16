@@ -20,7 +20,7 @@ from .base import (
 
 
 def _get_expire_time() -> int:
-    return time.time() + settings_obj.REFERRAL_CODE_EXPIRATION
+    return int(time.time() + settings_obj.REFERRAL_CODE_EXPIRATION)
 
 
 def _get_nano_id() -> str:

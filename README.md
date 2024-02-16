@@ -15,12 +15,17 @@ This REST API is made for [test](https://docs.google.com/document/d/1YaiDiza5U3i
 ## How to run
 
 ### Install from git:
+
 #### Using GitHub:
+
 ```shell
 $ git clone https://github.com/abstract-333/referral-api.git
 ```
-or 
+
+or
+
 #### Using GitFlic:
+
 ```shell
 $ git clone https://github.com/abstract-333/referral-api.git
 ```
@@ -69,18 +74,22 @@ $ uvicorn app:app --reload
   have.
 * Adding Docs for all routers.
 * Using pydantic in order to make validation simple and safe,
-  also [Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/) sounds good to store
+  also [Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/) sounds good to manage
   environment
-  variables in one place.
+  variables from one place.
 * For referral code I use [Nano ID](https://zelark.github.io/nano-id-cc/).
 * Using [Brotli Compression](https://www.coralnodes.com/gzip-vs-brotli/)
   and [ORJSON](https://github.com/ijl/orjson), which increase the
-  performance of this api.
+  performance of API.
   ![ORJSON](https://github.com/ijl/orjson/raw/master/doc/serialization.png)
 * [Health Check pattern](https://microservices.io/patterns/observability/health-check-api.html). The API endpoint
   handler performs various checks, such as
   the status of the connections to the infrastructure services used by the service instance,
   the status of the host and application specific logic.
+* The
+  system treats
+  these emails similarly (_user@example.com_, _u.s.e.r@example.com_), see why
+  it's [important](https://support.google.com/mail/answer/7436150?hl=en#:~:text=Adding%20dots%20doesn't%20change,or%20forgot%20the%20correct%20address.).
 
 ## ERD:
 
