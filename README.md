@@ -20,6 +20,8 @@ This REST API is made for [test](https://docs.google.com/document/d/1YaiDiza5U3i
 
 ```shell
 $ git clone https://github.com/abstract-333/referral-api.git
+
+$ cd referral-api
 ```
 
 or
@@ -31,7 +33,9 @@ $ git clone https://gitflic.ru/project/abstract-333/referral-api.git
 
 $ cd referral-api
 ```
+
 ### Create and activate virutal environment:
+
 ```shell
 $ python -m venv env
 
