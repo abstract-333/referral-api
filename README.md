@@ -28,6 +28,14 @@ or
 
 ```shell
 $ git clone https://gitflic.ru/project/abstract-333/referral-api.git
+
+$ cd referral-api
+```
+### Create and activate virutal environment:
+```shell
+$ python -m venv env
+
+$ .\env\Scripts\activate
 ```
 
 ### Install dependencies:
