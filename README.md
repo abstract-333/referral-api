@@ -59,8 +59,7 @@ Add this name and other properties to .env.prod file.
 <br>
 
 ```shell
-$ alembic init alembic
-$ alembic upgrade head
+$ alembic upgrade heads
 ```
 
 ### Run App:
